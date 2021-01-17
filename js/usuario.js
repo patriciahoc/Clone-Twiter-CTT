@@ -1,7 +1,7 @@
-class Usuario{
+// class Usuario{
   
-  buscaUsuario() {
+//   buscaUsuario() {
     
-    return fetch("./usuario.json")
-  }
-}
+//     return fetch("./usuario.json")
+//   }
+// }

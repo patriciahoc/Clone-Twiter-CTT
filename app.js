@@ -1,5 +1,7 @@
 const objetoFollow = new Followers()
 const objetoCard = new CardFollow()
+const objetoTweets= new Tweets()
+const objetoCardTweet = new CardTweet()
 
 
 objetoFollow.buscaFollow()
@@ -9,6 +11,19 @@ objetoFollow.buscaFollow()
 
     .then(function(dados){
       objetoCard.mostraFollow(dados)
-      console.log(dados)
+      
+    })
+  })
+
+
+
+
+objetoTweets.buscaTweets()
+  .then(function(resposta){    
+     return resposta.json()
+
+    .then(function(dados){
+      objetoCardTweet.mostraTweets(dados)
+     
     })
   })
