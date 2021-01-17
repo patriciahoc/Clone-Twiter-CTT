@@ -1,13 +1,20 @@
-class CardUsuarioItens{
-  constructor(){
-    this.usuarioItens = document.getElementById("usuarioItens")
-    this.nome = document.getElementById("nome")
-    this.usuario = document.getElementById("usuario")
-    this.local = document.getElementById("local")
-    this.dataCadastro = document.getElementById("dataCadastro")
+class CardUsuarioItens {
+  constructor() {
+    this.usuarioItens = document.getElementById("usuarioItens");
+    this.nome = document.getElementById("nome");
+    this.usuario = document.getElementById("usuario");
+    this.local = document.getElementById("local");
+    this.dataCadastro = document.getElementById("dataCadastro");
   }
-  mostraUsuarioItens(dados){
-      let cardUsuarioIens = `<li class="profile-stats-item-active">
+  mostraUsuarioItens(dados) {
+    let dadosUsuario = {
+      nome: dados.nome,
+      usuario: dados.usuario,
+      local: dados.local,
+      cadastro: dados.cadastro,
+    };
+    localStorage.setItem("dadosUsuario", JSON.stringify(dadosUsuario))
+    let cardUsuarioIens = `<li class="profile-stats-item-active">
       <a>
         <span class="profile-stats-item profile-stats-item-label">Tweets</span>
         <span class="profile-stats-item profile-stats-item-number">${dados.quantidade_tweets}</span>
@@ -31,25 +38,29 @@ class CardUsuarioItens{
         <span class="profile-stats-item profile-stats-item-number">${dados.likes}</span>
       </a>
     </li>
-      `
-  
-    this.usuarioItens.innerHTML = cardUsuarioIens
-    this.nome.innerHTML = dados.nome
-    this.usuario.innerHTML = `@${dados.usuario}`
-    this.local.innerHTML = dados.local
-    this.dataCadastro.innerHTML = dados.cadastro
+      `;
+
+    this.usuarioItens.innerHTML = cardUsuarioIens;
+    this.mostraDadosUsuario()
+    
+  }
+
+  mostraDadosUsuario(){
+    const dados = JSON.parse(localStorage.getItem("dadosUsuario")) 
+    this.nome.innerHTML = dados.nome;
+    this.usuario.innerHTML = `@${dados.usuario}`;
+    this.local.innerHTML = dados.local;
+    this.dataCadastro.innerHTML = dados.cadastro;
   }
 }
 
+class CardFollow {
+  constructor() {
+    this.follow = document.getElementById("listaUsuario");
+  }
 
-
-class CardFollow{
-  constructor(){
-    this.follow = document.getElementById("listaUsuario")
-  }        
-
-  mostraFollow(dados){
-    let cardFollowUsers = dados.followers.map((elemento, i)=> {
+  mostraFollow(dados) {
+    let cardFollowUsers = dados.followers.map((elemento, i) => {
       return `
       <li class="tweet-card">
       <div class="tweet-content">
@@ -64,21 +75,19 @@ class CardFollow{
         <button class="btn btn-follow">Follow</button>
       </div>
     </li>  
-    `
-    
-    })
-    this.follow.innerHTML = cardFollowUsers.join("")
-  }  
+    `;
+    });
+    this.follow.innerHTML = cardFollowUsers.join("");
+  }
 }
 
-class CardTweet{
-  constructor(){
-    this.tweets = document.getElementById("listaTweetUser")
-  } 
+class CardTweet {
+  constructor() {
+    this.tweets = document.getElementById("listaTweetUser");
+  }
 
-  mostraTweets(dados){
-    
-    let cardTweetsUsers = dados.tweets.map((elemento, i)=> {
+  mostraTweets(dados) {
+    let cardTweetsUsers = dados.tweets.map((elemento, i) => {
       return `<li class="tweet-card">
         <div class="tweet-content">
           <div class="tweet-header">
@@ -113,14 +122,9 @@ class CardTweet{
             </a>
           </div>
         </div>
-      </li>`
-    
-    })
-    
-    this.tweets.innerHTML = cardTweetsUsers.join("")
-    
-  }  
+      </li>`;
+    });
+
+    this.tweets.innerHTML = cardTweetsUsers.join("");
+  }
 }
-
-
-
